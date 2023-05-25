@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>edit</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/houseinfo/edit}" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="id" th:value="${houseinfo.id}">
+        总价：<input name="totalPrice"  th:value="${houseinfo.totalPrice}"  /><span> 万元</span>  <br/>
+        单价：<input name="unitPrice"   th:value="${houseinfo.unitPrice}" /> <span> 元</span> <br/>
+        面积：<input name="area"        th:value="${houseinfo.area}" /> <span> 平方米</span><br/>
+        <input type="submit" >
+    </form>
+
+
+</div>
+
+</body>
+</html>

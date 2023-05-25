@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>add</title>
+</head>
+<body>
+<!--         private String   cellName;         //    小区名称: 明阳建成小区-->
+<!--        private Integer  buildingNumber;          //    楼号: 9-->
+<!--        private Integer  unitNumber;         //    单元号: 1-->
+<!--        private Integer  roomNumber;            //    房间号: 1602-->
+<!--        private Integer  totalPrice;           //    总价: 106-->
+<!--        private Integer  unitPrice;           //    单价: 6000-->
+<!--        private String   houseType;            //    户型: 四室两厅两卫-->
+<!--        private Integer  area;                  //    面积: 106-->
+<!--        private Integer  purchasingMethod;   //    购买方式: 分期/全款  1是分期  2是全款-->
+<!--        private Integer  isElevator;            //    电梯: 有      0是无   1是有-->
+<!--        private Integer  completionYear;            //    建成年代: 2012-->
+<!--        private Integer  isHeating;            //    供暖: 有       0是无    1是有-->
+<!--        private Integer  greeningArea;            //    绿化: 38%-->
+<div>
+    <form th:action="@{/houseinfo/add}" method="post" accept-charset="UTF-8">
+        小区名称：<input name="cellName"  /><br/>
+        楼号：<input name="buildingNumber"   /><br/>
+        单元号：<input name="unitNumber"     /><br/>
+        房间号：<input name="roomNumber"  /><br/>
+        总价：<input name="totalPrice"   /><span> 万元</span><br/>
+        单价：<input name="unitPrice"  /><span> 元</span><br/>
+        户型：<input name="houseType"   /><br/>
+        面积：<input name="area"    /> <span> 平方米</span><br/>
+        建成年代：<input name="completionYear"   /><br/>
+        绿化：<input name="greeningArea"    /> %<br/>
+
+        购买方式：<input type="radio" name="purchasingMethod" value="2" checked /> 全款
+                  <input type="radio" name="purchasingMethod" value="1"  /> 分期<br/>
+        电梯：<input type="radio" name="isElevator" value="1"  checked/> 有
+               <input type="radio" name="isElevator" value="0" /> 无<br/>
+        供暖：<input type="radio" name="isHeating"  value="1"  checked/>有
+               <input type="radio" name="isHeating" value="0"  /> 无<br/>
+
+        <input type="submit" >
+    </form>
+
+
+</div>
+
+</body>
+</html>

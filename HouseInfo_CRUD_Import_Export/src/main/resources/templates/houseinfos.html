@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-size="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>houseInfo</title>
+
+</head>
+<body>
+<div>
+    <table border="1"  align="center" >
+
+<!--         private String   cellName;         //    小区名称: 明阳建成小区-->
+<!--        private Integer  buildingNumber;          //    楼号: 9-->
+<!--        private Integer  unitNumber;         //    单元号: 1-->
+<!--        private Integer  roomNumber;            //    房间号: 1602-->
+<!--        private Integer  totalPrice;           //    总价: 106-->
+<!--        private Integer  unitPrice;           //    单价: 6000-->
+<!--        private String   houseType;            //    户型: 四室两厅两卫-->
+<!--        private Integer  area;                  //    面积: 106-->
+<!--        private Integer  purchasingMethod;   //    购买方式: 分期/全款  1是分期  2是全款-->
+<!--        private Integer  isElevator;            //    电梯: 有      0是无   1是有-->
+<!--        private Integer  completionYear;            //    建成年代: 2012-->
+<!--        private Integer  isHeating;            //    供暖: 有       0是无    1是有-->
+<!--        private Integer  greeningArea;            //    绿化: 38%-->
+        <tr  style="height: 50px;width: 100px"  align="center">
+            <th>序号</th>
+            <th>小区名称</th>
+            <th>楼号</th>
+            <th>单元号</th>
+            <th>房间号</th>
+            <th>总价/万元</th>
+            <th>单价/元</th>
+            <th>户型</th>
+            <th>面积/平方</th>
+            <th>购买方式</th>
+            <th>电梯</th>
+            <th>建成年代</th>
+            <th>供暖</th>
+            <th>绿化</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="houseInfo,index:${houseInfoList}"  style="height: 50px;width: 100px;align-content: center" align="center" >
+
+            <td th:text="${index.count}"></td>
+            <td th:text="${houseInfo.cellName}"></td>
+            <td th:text="${houseInfo.buildingNumber}"></td>
+            <td th:text="${houseInfo.unitNumber}"></td>
+            <td th:text="${houseInfo.roomNumber}"></td>
+            <td th:text="${houseInfo.totalPrice}"></td>
+            <td th:text="${houseInfo.unitPrice}"></td>
+            <td th:text="${houseInfo.houseType}"></td>
+            <td th:text="${houseInfo.area}"></td>
+            <td th:text="${houseInfo.purchasingMethod == '1'?'分期':'全款'}"></td>
+            <td th:text="${houseInfo.isElevator == '0'?'无':'有' }"></td>
+            <td th:text="${houseInfo.completionYear}"></td>
+            <td th:text="${houseInfo.isHeating == '0'?'无':'有'}"></td>
+            <td th:text="${houseInfo.greeningArea}"></td>
+            <!--       @{/role/toupdate/}+${item.id}         -->
+            <td>
+                <a th:href="@{/houseinfo/delete/}+${houseInfo.id}">删除</a>
+                <a th:href="@{/houseinfo/toedit/}+${houseInfo.id}">编辑</a>
+            </td>
+        </tr>
+    </table><br>
+   <div align="center">
+       <a th:href="@{/houseinfo/toadd}"  style="font-size: 20px" >添加</a>
+       <a th:href="@{/houseinfo/import}"  style="font-size: 20px" >
+          导入excel
+       </a>
+       <a th:href="@{/houseinfo/export}"  style="font-size: 20px" >导出excel</a>
+   </div>
+    <
+<!--    <form th:action="@{/fileupload}" method="post" enctype="multipart/form-data">-->
+<!--        上传者：<input type="text" name="username"><br>-->
+<!--        选择文件：<input type="file" name="fileupload"><br>-->
+<!--        <input type="submit">-->
+<!--    </form>-->
+</div>
+</body>
+</html>
