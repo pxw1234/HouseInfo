@@ -1,8 +1,10 @@
 package com.li.springboot.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.read.listener.PageReadListener;
 import com.li.springboot.entity.HouseInfo;
 import com.li.springboot.service.HouseInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -24,10 +26,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 @RequestMapping("/houseinfo")
 public class HouseInfoController {
 
@@ -107,17 +111,28 @@ public class HouseInfoController {
 
     //上传
     @RequestMapping("/import")
-    public void fileupload(String username, MultipartFile fileupload, HttpSession session) throws IOException {
+    public String fileupload(Model model, MultipartFile fileupload) throws IOException {
 
 //      将type=file【文件域】直接入参：MultipartFile类型即可
 //      获取文件名称
         String fileName = fileupload.getOriginalFilename();
+
+        if(fileName == null){
+            model.addAttribute("msg","文件名称为空");
+            return "error_page";
+        }
+
         //处理文件重名问题
         String hzName = fileName.substring(fileName.lastIndexOf("."));
+
+        if(!".xlsx".equals(hzName)){ //  如果不是 .xlsx  文件   返回错误  这里
+            model.addAttribute("msg","不是.xlsx文件");
+            return "error_page";
+        }
         fileName = UUID.randomUUID().toString() + hzName;
 //      获取上传文件真实路径
 
-        String realPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath()+"/upload";
+        String realPath = ClassUtils.getDefaultClassLoader().getResource("templates").getPath()+"/upload";
         //如果文件夹不存在  就创建
         final File file = new File(realPath);
         if(!file.exists()){
@@ -129,9 +144,25 @@ public class HouseInfoController {
 //      实现文件上传
         fileupload.transferTo(new File(filepath));
 
-        //文件读取
 
+
+        //文件读取 写入数据库
+        final ArrayList<HouseInfo> houseInfolists = new ArrayList<>();
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        // 这里默认每次会读取100条数据 然后返回过来 直接调用使用数据就行
+        // 具体需要返回多少行可以在`PageReadListener`的构造函数设置
+        EasyExcel.read(filepath, HouseInfo.class, new PageReadListener<HouseInfo>(dataList -> {
+            for (HouseInfo houseInfo : dataList) {
+                log.info("读取到一条数据{}", houseInfo.toString());
+                houseInfolists.add(houseInfo);
+            }
+        })).sheet().doRead();
+        houseInfoService.saveBatch(houseInfolists);
+
+        return "redirect:/houseinfo";
     }
+
+
 
 
 

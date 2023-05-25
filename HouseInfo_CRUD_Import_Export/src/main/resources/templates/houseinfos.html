@@ -64,12 +64,16 @@
     </table><br>
    <div align="center">
        <a th:href="@{/houseinfo/toadd}"  style="font-size: 20px" >添加</a>
-       <a th:href="@{/houseinfo/import}"  style="font-size: 20px" >
-          导入excel
-       </a>
-       <a th:href="@{/houseinfo/export}"  style="font-size: 20px" >导出excel</a>
+       <a th:href="@{/houseinfo/export}"  style="font-size: 20px" >导出excel</a><br><br>
+
+       <div>
+           <form th:action="@{/houseinfo/import}" method="post" enctype="multipart/form-data" style="font-size: 20px">
+               选择excel：<input type="file" name="fileupload">
+               <input type="submit" value="提交excel">
+           </form>
+       </div>
    </div>
-    <
+
 <!--    <form th:action="@{/fileupload}" method="post" enctype="multipart/form-data">-->
 <!--        上传者：<input type="text" name="username"><br>-->
 <!--        选择文件：<input type="file" name="fileupload"><br>-->
